@@ -1,6 +1,21 @@
 基础的 协同注意力
+Input: 视频里的两帧 F_a, F_b
+提取这两帧的特征V_a, V_b, Va Vb ∈ R W×H×C
+参考另外俩paper【65，35】协同注意力机制来发掘这两帧特征的相关性。具体说，计算Va和Vb的相似性矩阵S
 ![image](https://user-images.githubusercontent.com/11287531/115958848-5914a980-a55d-11eb-915a-fb47b7e2c066.png)
+W∈ R C×C 是个权重矩阵。Va的每一列表示的是一个C channel的feature向量，这样的feature一共有wxh个。Va Vb ∈R C×(WH)，这俩特征矩阵被flatten（摊平，降维）。S的每一列，表示的是Va和Vb的每个feature的相似度。
+W是一个方阵，可以对角化为
 ![image](https://user-images.githubusercontent.com/11287531/115958861-65990200-a55d-11eb-94d4-a5f626cb35e7.png)
+
+问题：
+**1.权重矩阵W应该是由网络计算的吧？
+2.为什么权重矩阵W可以对角化？W∈ R C×C， 怎么证明它有C个特征向量？会不会有某个Channel权重特征向量和其他Channel线性相关？
+3.D如果是矩阵W的特征值对角矩阵，那是不是应该写成
+P(-1) W P = D, P是W的特征向量矩阵， D是W的特征值对角矩阵
+变换一下的话，应该是 (P P(-1)) W P = P D =>   W P = P D  =>  W = P D P(-1), 而不是 W = P(-1) D P （公式2）。 我哪里错了吗？**
+
+
+
 ![image](https://user-images.githubusercontent.com/11287531/115958874-721d5a80-a55d-11eb-908e-4c64f81f8a27.png)
 
 
@@ -8,8 +23,11 @@
 
 如果我们进一步约束权重矩阵W为一个对称矩阵，特征向量组矩阵P就变成了一个正交矩阵。这个对称的协同注意力可以演变成
 ![image](https://user-images.githubusercontent.com/11287531/115957756-56fc1c00-a558-11eb-8ad1-01fe913367f2.png)
-这个公式表明
-...？
+
+问题：
+**这个公式表明什么？没明白**
+
+
 
 这个属性已经被证明 对排除不同通道间的相关性 非常有帮助【50】同时有助于提升网络泛化能力【3，48】
 

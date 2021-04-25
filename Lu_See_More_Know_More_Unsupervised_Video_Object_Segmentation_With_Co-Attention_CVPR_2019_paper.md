@@ -11,6 +11,7 @@ Input: 视频里的两帧 F<sub>a</sub>, F<sub>b</sub></br>
 ![image](https://user-images.githubusercontent.com/11287531/115958861-65990200-a55d-11eb-94d4-a5f626cb35e7.png)
 
 ```
+diff
 + 1.为什么权重矩阵W可以对角化？
 + 2.如果D是矩阵W的特征值对角矩阵，P是W的特征向量矩阵，方阵W对角化的话是不是应该写成
 + P<sup>-1</sup> W P = D
@@ -26,6 +27,7 @@ Input: 视频里的两帧 F<sub>a</sub>, F<sub>b</sub></br>
 ![image](https://user-images.githubusercontent.com/11287531/115957756-56fc1c00-a558-11eb-8ad1-01fe913367f2.png)
 
 ```
+diff
 + It indicates that we project the feature embeddings V<sub>a</sub> and V<sub>b</sub> into an orthogonal common space and maintain their norm of V<sub>a</sub> and V<sub>b</sub>. 它表明什么？没明白
 ```
 这个属性已经被证明 对排除不同通道间的相关性 非常有帮助【50】同时有助于提升网络泛化能力【3，48】
@@ -35,6 +37,7 @@ Input: 视频里的两帧 F<sub>a</sub>, F<sub>b</sub></br>
 
 而且，方阵W的特征向量组矩阵P 可以被简化成一个单位矩阵，然后W变成一个对角矩阵。这样的话，W可以被进一步对角化成两个对角矩阵D<sub>a</sub>和D<sub>b</sub>
 ```
+diff
 + 原话Furthermore, the project matrix P can be simplified into an identity matrix I (i.e., without space transformation), and then the weight matrix W becomes a diagonal matrix. In this case, W (i.e., D) can be further diagonalized into two diagonal matrices Da and Db.这句话什么意思?
 ```
 因此，公式3可以写成基于通道的 协同注意力

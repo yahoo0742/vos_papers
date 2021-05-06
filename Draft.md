@@ -63,9 +63,44 @@ https://github.com/carrierlxk/MuG
 https://arxiv.org/pdf/2003.05020.pdf
 ![image](https://user-images.githubusercontent.com/11287531/117253345-3bb7d780-ae9b-11eb-9d74-97921440509a.png)
 ![image](https://user-images.githubusercontent.com/11287531/117253403-4a05f380-ae9b-11eb-8446-3e9f4ea446c5.png)
-![image](https://user-images.githubusercontent.com/11287531/117253428-51c59800-ae9b-11eb-8f18-02fec260669d.png)
-![image](https://user-images.githubusercontent.com/11287531/117253476-5b4f0000-ae9b-11eb-9a07-15d684573b64.png)
+For a training video V ∈ S containing T frames: V = { X<sub>t</sub> }<sub>t=1</sub><sup>T</sup>, its features are specified as {x<sub>t</sub>}<sub>t=1</sub><sup>T</sup>, obtained from a FCN feature extractor ϕ: x<sub>t</sub>=ϕ(X<sub>t</sub>)∈ R<sup>W×H×C</sup>. 4-granularity characteristics for guiding the learning of ϕ.
 
+Frame Granularity: Fore-background Knowledge Understanding. Basic fore-background mask Q<sub>t</sub> ∈ {0, 1} <sup>W×H</sup> for each frame X<sub>t</sub> is initially from background prior based saliency model <i>Saliency detection via graph-based manifold ranking</i>(unsupervised learning setting), or CAM maps from  <i>Multi-source weak supervision for saliency detection</i> or <i>Learning deep features for discriminative localization</i>(weakly supervised learning setting). 
+Loss function:![image](https://user-images.githubusercontent.com/11287531/117277225-c3a9db80-aeb3-11eb-8a7d-c24d3f532b91.png)
+L<sub>CE</sub> is the cross-entropy loss, P<sub>t</sub> is the prediction mask, the output of ρ(x<sub>t</sub>) where ρ: R<sup>WxHxC</sup> → [0,1]<sup>WxH</sup> map frame feature to a mask. Input: single frame feature x<sub>t</sub>. ρ 1x1 convolutional layer with simoid activation
+
+Short-Term Granularity:  Intra-Clip Coherence Modeling. 
+![image](https://user-images.githubusercontent.com/11287531/117253428-51c59800-ae9b-11eb-8f18-02fec260669d.png)
+Given two consecutive frames X<sub>t</sub> and X<sub>t+1</sub>, crop a patch p from X<sub>t</sub>, apply ϕ on p and X<sub>t+1</sub>, we get 2 feature maps ϕ(p)∈ R<sup>wxhxc</sup> and x<sub>t+1</sub>∈ R<sup>WxHxC</sup>. conduct a cross-correlation operation we get S, a sigmoid-normalized tracking response map.
+![image](https://user-images.githubusercontent.com/11287531/117285063-ad078280-aebb-11eb-9fca-da53ba6a3aaf.png)
+The peak value on S, the most similar spot between the 2 feature maps, is considered as the new location of p, p' in X<sub>t+1</sub>, then backward track p' to frame X<sub>t</sub>. 
+![image](https://user-images.githubusercontent.com/11287531/117288440-9d8a3880-aebf-11eb-8a6f-237c34ad59b8.png)
+G<sub>p</sub> p ∈ [0, 1]<sup>W×H</sup> is a Gaussian-shap map with the same center of p and variance to the size of p.
+
+continue cropping and conducting cross-correlation between X<sub>t+1</sub> and X<sub>t+2</sub>, then back track to X<sub>t+1</sub> to the initial frame X<sub>t</sub>.
+With above designs, ϕ captures the spatiotemporally local correspondence and is content-discriminative
+(due to its cross-frame target re-identification nature)
+
+Long-Term Granularity Analysis: Cross-Frame Semantic Matching. Capturing this property is essential for ϕ, as it makes ϕ robust to many challenges, such as appearance variants, shape deformations, object occlusions, etc. the authors cast crossframe correspondence learning as a dual-frame semantic
+matching problem.
+![image](https://user-images.githubusercontent.com/11287531/117253476-5b4f0000-ae9b-11eb-9a07-15d684573b64.png)
+input: disordered frames X<sub>i</sub>, X<sub>j</sub> randomly sampled from video
+compute similarity affinity A<sub>i,j</sub> between (ϕ (X<sub>i</sub>), ϕ (X<sub>j</sub>)) by a co-attention operation
+![image](https://user-images.githubusercontent.com/11287531/117290365-d3c8b780-aec1-11eb-86fa-d37da5ce093a.png)
+where x<sub>i</sub> ∈ R<sup>Cx(WH)</sup> and x<sub>j</sub> ∈ R<sup>Cx(WH)</sup> are flat matrix of the feature maps of the 2 frames.
+column-wise softmax.
+Another small NN : R<sup>(W×H)×(W×H)</sup> → R <sup>6</sup> to regress a geometric transformation 6-degree of freedom.(trans, rot, scale)
+![image](https://user-images.githubusercontent.com/11287531/117291498-32dafc00-aec3-11eb-9297-626f10592102.png)
+
+
+As seen in Fig.1(b), the fore-background knowledge from the saliency [70] or
+CAM [73, 76] is ambiguous and noisy. Inspired by Bootstrapping [40], we apply an iterative training strategy: after training with the initial fore-background maps, we use our trained model to re-label the training data. With each
+iteration, the learner bootstraps itself by mining better forebackground knowledge and then leading a better model.
+
+![image](https://user-images.githubusercontent.com/11287531/117292266-1ab7ac80-aec4-11eb-8c65-79f5f23a9895.png)
+β1 = 0.1, β2 = 0.02 and β3 = 0.5.
+Once the model is trained, the learned representations ϕ can be used for ZVOS and O-VOS, with slight modifications.
+![image](https://user-images.githubusercontent.com/11287531/117292587-81d56100-aec4-11eb-8aa0-b163838ed868.png)
 
 
 Video Object Segmentation and Tracking: A Survey

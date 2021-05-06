@@ -58,6 +58,14 @@ based on the CNN-convLSTM architecture, Visual attention-driven unsupervised VOS
 ![image](https://user-images.githubusercontent.com/11287531/116980550-79412700-ad1a-11eb-9572-88c4e5124409.png)
 
 
+(CVPR2020) Xiankai Lu1, Wenguan Wang2, Jianbing Shen, Yu-Wing Tai, David Crandall, Steven C. H. Hoi, Learning Video Object Segmentation from Unlabeled Videos
+https://github.com/carrierlxk/MuG
+https://arxiv.org/pdf/2003.05020.pdf
+![image](https://user-images.githubusercontent.com/11287531/117253345-3bb7d780-ae9b-11eb-9d74-97921440509a.png)
+![image](https://user-images.githubusercontent.com/11287531/117253403-4a05f380-ae9b-11eb-8446-3e9f4ea446c5.png)
+![image](https://user-images.githubusercontent.com/11287531/117253428-51c59800-ae9b-11eb-8f18-02fec260669d.png)
+![image](https://user-images.githubusercontent.com/11287531/117253476-5b4f0000-ae9b-11eb-9a07-15d684573b64.png)
+
 
 
 Video Object Segmentation and Tracking: A Survey

@@ -1,8 +1,61 @@
+Recurrent network
+
+(ECCV2018) Hongmei Song, Wenguan Wang, Sanyuan Zhao, Jianbing Shen, and Kin-Man Lam, Pyramid Dilated Deeper ConvLSTM for Video Salient Object Detection
+https://github.com/shenjianbing/PDB-ConvLSTM
+https://openaccess.thecvf.com/content_ECCV_2018/papers/Hongmei_Song_Pseudo_Pyramid_Deeper_ECCV_2018_paper.pdf
+Pyramid dilated bidirectional ConvLSTM architecture, and CRF-based post-process Continued
+![image](https://user-images.githubusercontent.com/11287531/116868153-5eab7700-ac62-11eb-90bb-e8a50ae19804.png)
+
+The model consists of two key components. The first one, named Pyramid Dilated Convolution (PDC) module, is used for explicitly extracting spatial saliency features on multi-scales.
+feature map F = ResNet(a 473x473x3 video frame), 60x60x2048
+T1 = DilatedConv1(F)
+T2 = DilatedConv2(F)
+T3 = DilatedConv3(F)
+T4 = DilatedConv4(F)
+Z = Concatenate(F, T1, T2, T3, T4)
+With the dilated convolution, it computes dense CNN features at various receptive field sizes.
+
+
+(CVPR2019) Wang et al., Learning Unsupervised Video Object Segmentation through Visual Attention
+Wenguan Wang, Hongmei Song
+https://github.com/wenguanwang/AGS
+https://openaccess.thecvf.com/content_CVPR_2019/papers/Wang_Learning_Unsupervised_Video_Object_Segmentation_Through_Visual_Attention_CVPR_2019_paper.pdf
+based on the CNN-convLSTM architecture, Visual attention-driven unsupervised VOS model.
+![image](https://user-images.githubusercontent.com/11287531/116980492-675f8400-ad1a-11eb-81cf-5f9c9c070be3.png)
+![image](https://user-images.githubusercontent.com/11287531/116980550-79412700-ad1a-11eb-9572-88c4e5124409.png)
+
+
+-----------------
+Two-stream network 
+
+(ICCV2017) J. Cheng and Y.-H. Tsai and S. Wang and M.-H. Yang, SegFlow: Joint Learning for Video Object Segmentation and Optical Flow
+https://github.com/JingchunCheng/SegFlow
+https://sites.google.com/site/yihsuantsai/research/iccv17-segflow
+https://arxiv.org/pdf/1709.06750.pdf
+
+(ICCV2017) Pavel Tokmakov, Karteek Alahari, and Cordelia Schmid, LVO Learning video object segmentation with visual Memory
+https://arxiv.org/pdf/1704.05737.pdf
+https://ieeexplore.ieee.org/document/8237742
+Integrate one stream with appearance information and a visual memory module based on C-GRU.
+![image](https://user-images.githubusercontent.com/11287531/116866369-64538d80-ac5f-11eb-8095-06cdf2aa4fae.png)
+![image](https://user-images.githubusercontent.com/11287531/116866644-e0e66c00-ac5f-11eb-958a-f37262b40604.png)
+
+
+(AAAI2020) Zhou, Tianfei and Wang, Shunzhou and Zhou, Yi and Yao, Yazhou and Li, Jianwu and Shao, Ling, Motion-Attentive Transition for Zero-Shot Video Object Segmentation
+https://github.com/tfzhou/MATNet
+https://arxiv.org/pdf/2003.04253.pdf
+
+
 (CVPR2017) Jain et al., FusionSeg :Learning to combine motion and appearance for fully automatic segmentation of generic objects in video
 https://feedforward.github.io/blog/fusionseg/
 https://www.cs.utexas.edu/~grauman/papers/fusionseg-cvpr2017.pdf
 FSEG. Design a two-stream fully CNN to combine appearance and motion information.
 ![image](https://user-images.githubusercontent.com/11287531/116865685-391c6e80-ac5e-11eb-96a1-63f567b2de8c.png)
+
+
+
+---------------
+Bottom-up Top-down
 
 (CVPR2017) Tokmakov et al., Learning Motion Patterns in Videos
 http://thoth.inrialpes.fr/research/mpnet/
@@ -10,12 +63,14 @@ https://openaccess.thecvf.com/content_cvpr_2017/papers/Tokmakov_Learning_Motion_
 MP-Net. takes the optical flow field of two consecutive frames of a video sequence as input and produces per-pixel motion labels.
 ![image](https://user-images.githubusercontent.com/11287531/116866023-cc55a400-ac5e-11eb-887f-1f86a470560d.png)
 
-(arXiv2017) Tokmakov et al., LVO Learning video object segmentation with visual Memory
-https://arxiv.org/pdf/1704.05737.pdf
-https://ieeexplore.ieee.org/document/8237742
-Integrate one stream with appearance information and a visual memory module based on C-GRU.
-![image](https://user-images.githubusercontent.com/11287531/116866369-64538d80-ac5f-11eb-8095-06cdf2aa4fae.png)
-![image](https://user-images.githubusercontent.com/11287531/116866644-e0e66c00-ac5f-11eb-958a-f37262b40604.png)
+
+--------------
+Teacher-student adaption
+(ICRA2019) Mennatullah Siam, Chen Jiang, Steven Lu, Laura Petrich, Mahmoud Gamal, Mohamed Elhoseiny, and Martin Jager sand, Video Segmentation using Teacher-Student Adaptation in a Human Robot Interaction (HRI) Setting
+https://deepai.org/publication/video-segmentation-using-teacher-student-adaptation-in-a-human-robot-interaction-hri-setting
+![image](https://user-images.githubusercontent.com/11287531/117377207-d90c1d80-af26-11eb-8c77-ad7222f9ce8d.png)
+
+
 
 (arXiv2017) Vijayanarasimahan et al., SfM-Net: Learning of Structure and Motion from Video
 https://ui.adsabs.harvard.edu/abs/2017arXiv170407804V/abstract
@@ -24,11 +79,9 @@ Geometry-aware CNN to predict depth, segmentation, camera and rigid object motio
 ![image](https://user-images.githubusercontent.com/11287531/116867773-c7deba80-ac61-11eb-8529-835c21cb0646.png)
 ![image](https://user-images.githubusercontent.com/11287531/116867814-d2994f80-ac61-11eb-9046-74c73f81148f.png)
 
-(ECCV2018) Song et al., Pyramid Dilated Deeper ConvLSTM for Video Salient Object Detection
-https://github.com/shenjianbing/PDB-ConvLSTM
-https://openaccess.thecvf.com/content_ECCV_2018/papers/Hongmei_Song_Pseudo_Pyramid_Deeper_ECCV_2018_paper.pdf
-Pyramid dilated bidirectional ConvLSTM architecture, and CRF-based post-process Continued
-![image](https://user-images.githubusercontent.com/11287531/116868153-5eab7700-ac62-11eb-90bb-e8a50ae19804.png)
+
+
+
 ![image](https://user-images.githubusercontent.com/11287531/116868176-6bc86600-ac62-11eb-9e1f-a839c076456a.png)
 ![image](https://user-images.githubusercontent.com/11287531/116868190-75ea6480-ac62-11eb-8af5-deee86e3d61a.png)
 
@@ -49,13 +102,6 @@ deep reinforcement learning methods is proposed to automatically detect moving o
 ![image](https://user-images.githubusercontent.com/11287531/116868845-a54da100-ac63-11eb-81b6-2521b8e6c084.png)
 
 
-(CVPR2019) Wang et al., Learning Unsupervised Video Object Segmentation through Visual Attention
-Wenguan Wang, Hongmei Song
-https://github.com/wenguanwang/AGS
-https://openaccess.thecvf.com/content_CVPR_2019/papers/Wang_Learning_Unsupervised_Video_Object_Segmentation_Through_Visual_Attention_CVPR_2019_paper.pdf
-based on the CNN-convLSTM architecture, Visual attention-driven unsupervised VOS model.
-![image](https://user-images.githubusercontent.com/11287531/116980492-675f8400-ad1a-11eb-81cf-5f9c9c070be3.png)
-![image](https://user-images.githubusercontent.com/11287531/116980550-79412700-ad1a-11eb-9572-88c4e5124409.png)
 
 
 (CVPR2020) Xiankai Lu1, Wenguan Wang2, Jianbing Shen, Yu-Wing Tai, David Crandall, Steven C. H. Hoi, Learning Video Object Segmentation from Unlabeled Videos

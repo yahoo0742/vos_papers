@@ -112,6 +112,38 @@ Then, after a total of K message passing iterations, for each node vi, apply the
 
 ===================
 
+(ECCV2020) Mingmin Zhen, Shiwei Li, Lei Zhou, Jiaxiang Shang, Haoan Feng, Tian Fang, Long Quan, Learning Discriminative Feature with CRF for Unsupervised Video Object Segmentation
+https://www.ecva.net/papers/eccv_2020/papers_ECCV/papers/123720443.pdf
+![image](https://user-images.githubusercontent.com/11287531/117386211-99e7c780-af3a-11eb-8b2e-1dd3ef80266e.png)
+To recognize the target object, the author expects to achieve two essential goals: (i) the ability to extract foreground objects from the individual frame; (ii) the ability to keep consistency among the video frames by correlating the features of each input image with discriminative features, which is extracted from input images selected from the same video randomly. 
+The proposed network takes several images as input. The shared feature encoder adopts the fully convolutional DeepLabv3 to extract features.
+The feature maps are then fed into a 1×1 convolutional layer to reduce the feature map channel to 256.
+The output feature maps are as input for the discriminative feature module(DFM) to extract the discriminative features.
+The input feature maps and the D-features go through an attention module(ATM) to reconstruct new feature maps
+In the end, through a 3x3 convolutional layer, a BN layer and a 1x1 convolutional layer by a sigmoid function, the final binary output is obtained.
+
+For the DFM, all feature maps from the input images are concatenated to form a large feature map F with size Nxhxwxc and then reshaped as Nhw x c.
+K-group scoring module to calculate scores of K groups for distinguishing the discriminative features from noisy features.
+![image](https://user-images.githubusercontent.com/11287531/117386225-a409c600-af3a-11eb-8971-3111d3d30012.png)
+For each group, the concated feature map F multiplies a weight matrix W∈R<sup>cx1</sup> to obtain the final score 
+s<sub>i</sub><sup>k</sup> = Softmax(F<sub>i<sub> W<sub>k</sub>)
+s<sub>i</sub> is the i<sup>th<sup> feature of F to represent the discriminability of the feature.
+The final discriminative feature for k<sup>th</sup> group of total K groups is comnputed as
+F'<sub>k</sub> = Sum(s<sub>i</sub> F<sub>i</sub>) ∈R<sup>1xc</sup> 
+The weight matrix W<sub>k</sub> is updated at training step t by
+![image](https://user-images.githubusercontent.com/11287531/117390768-e0412480-af42-11eb-8d37-56ac7d60259c.png)
+
+For the ATM, by following the idea from COSNet and AGNN, the ATM compute the attention matrix P 
+P = reshape(F<sub>i</sub>, hwxc) W<sub>att</sub> F'<sub>T<sub> ∈R<sup>hwxK</sup> 
+where W<sub>att</sub> ∈R<sup>cxc</sup> is a learnable weight matrix.
+Each element of P indicates the similarity of the corresponding feature of F<sub>i</sub> and feature of F'.
+![image](https://user-images.githubusercontent.com/11287531/117390978-301feb80-af43-11eb-8889-ae839ec24e23.png)
+Then the new feature map is reconstructed as
+F<sup>new</sup> = reshape(softmax(P)F', hxwxc)
+
+
+
+
 
 
 

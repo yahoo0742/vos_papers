@@ -133,13 +133,36 @@ F'<sub>k</sub> = Sum(s<sub>i</sub> F<sub>i</sub>) ∈R<sup>1xc</sup>
 The weight matrix W<sub>k</sub> is updated at training step t by
 ![image](https://user-images.githubusercontent.com/11287531/117390768-e0412480-af42-11eb-8d37-56ac7d60259c.png)
 
-For the ATM, by following the idea from COSNet and AGNN, the ATM compute the attention matrix P 
+The ATM is adopted to mine the correlations between the input images.
+By following the idea from COSNet and AGNN, the ATM compute the attention matrix P 
 P = reshape(F<sub>i</sub>, hwxc) W<sub>att</sub> F'<sub>T<sub> ∈R<sup>hwxK</sup> 
 where W<sub>att</sub> ∈R<sup>cxc</sup> is a learnable weight matrix.
 Each element of P indicates the similarity of the corresponding feature of F<sub>i</sub> and feature of F'.
 ![image](https://user-images.githubusercontent.com/11287531/117390978-301feb80-af43-11eb-8889-ae839ec24e23.png)
 Then the new feature map is reconstructed as
 F<sup>new</sup> = reshape(softmax(P)F', hxwxc)
+
+![image](https://user-images.githubusercontent.com/11287531/117393240-cd7d1e80-af47-11eb-97b6-3c9abfbe36c1.png)
+
+At last, The smoothness and consistency of the attention map are considered as a classification problem and solved
+by CRF.
+![image](https://user-images.githubusercontent.com/11287531/117393468-4e3c1a80-af48-11eb-8c7b-cf0b9d90fe53.png)
+
+F<sup>new</sup> = F<sup>new</sup> * conv(F<sup>new</sup>)
+F<sub>i</sub> = F<sub>i</sub> * conv(F<sub>i</sub>)
+
+At last, concatenate F<sup>new</sup> and F<sub>i</sub> to feed to a 1x1 convolutional layer to get the binary mask.
+
+![image](https://user-images.githubusercontent.com/11287531/117393736-de7a5f80-af48-11eb-919c-83b361711278.png)
+
+
+
+
+
+
+
+
+
 
 
 

@@ -8,11 +8,11 @@ Pyramid dilated bidirectional ConvLSTM architecture, and CRF-based post-process 
 
 The model consists of two key components. The first one, named Pyramid Dilated Convolution (PDC) module, is used for explicitly extracting spatial saliency features on multi-scales.
 feature map F = ResNet(a 473x473x3 video frame), 60x60x2048
-T1 = DilatedConv1(F)
-T2 = DilatedConv2(F)
-T3 = DilatedConv3(F)
-T4 = DilatedConv4(F)
-Z = Concatenate(F, T1, T2, T3, T4)
+T1 = DilatedConv1(F) </br>
+T2 = DilatedConv2(F) </br>
+T3 = DilatedConv3(F) </br>
+T4 = DilatedConv4(F) </br>
+Z = Concatenate(F, T1, T2, T3, T4) </br>
 With the dilated convolution, it computes dense CNN features at various receptive field sizes.
 
 
@@ -248,24 +248,10 @@ Once the model is trained, the learned representations ϕ can be used for ZVOS a
 
 
 
+================
 
-Dataset and Metrics
-Datasets and Metrics: We use two well-known datasets:
-• DAVIS16 [45] is a challenging video object segmentation dataset which consists of 50 videos in total (30 for
-training and 20 for val) with pixel-wise annotations for
-every frame. Three evaluation criteria are used in this
-dataset, i.e., region similarity (Intersection-over-Union)
-J , boundary accuracy F, and time stability T .
-• Youtube-Objects [47] comprises 126 video sequences
-which belong to 10 object categories and contain more
-than 20,000 frames in total. Following its protocol, we
-use J to measure the segmentation performance.
-• DAVIS17 [46] consists of 60 videos in the training set, 30
-videos in the validation set and 30 videos in the test-dev
-set. Different from DAVIS2016 and Youtube-Objects,
-which only focus on object-level video object segmentation, DAVIS17 provides instance-level annotations.
+Datasets and Metrics:
+• DAVIS16 [45] is a challenging video object segmentation dataset which consists of 50 videos in total (30 for training and 20 for val) with pixel-wise annotations for every frame. Three evaluation criteria are used in this dataset, i.e., region similarity (Intersection-over-Union)J , boundary accuracy F, and time stability T 
+• Youtube-Objects [47] comprises 126 video sequences belonging to 10 object categories and contain more than 20,000 frames in total. Following its protocol, J is commonly for measuring the segmentation performance.
+• DAVIS17 [46] consists of 60 videos in the training set, 30 videos in the validation set and 30 videos in the test-dev set. Different from DAVIS2016 and Youtube-Objects, which only focus on object-level video object segmentation, DAVIS17 provides instance-level annotations.
 
-
-
-Video Object Segmentation and Tracking: A Survey
-https://eungbean.github.io/2019/09/04/awesome-video-object-segmentation/

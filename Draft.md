@@ -72,6 +72,49 @@ https://deepai.org/publication/video-segmentation-using-teacher-student-adaptati
 
 
 
+Co-attention
+
+(CVPR2019) Xiankai Lu, Wenguan Wang, Chao Ma, Jianbing Shen, Ling Shao, Fatih Porikli, See More, Know More: Unsupervised Video Object Segmentation with Co-Attention Siamese Networks
+https://github.com/carrierlxk/COSNet
+https://openaccess.thecvf.com/content_CVPR_2019/papers/Lu_See_More_Know_More_Unsupervised_Video_Object_Segmentation_With_Co-Attention_CVPR_2019_paper.pdf
+![image](https://user-images.githubusercontent.com/11287531/117377875-5f752f00-af28-11eb-9e7a-0234e1c4f829.png)
+![image](https://user-images.githubusercontent.com/11287531/117378191-02c64400-af29-11eb-8cfe-e6f8b4f9d76e.png)
+![image](https://user-images.githubusercontent.com/11287531/117378216-0eb20600-af29-11eb-85f3-77cc9033fb3c.png)
+![image](https://user-images.githubusercontent.com/11287531/117378252-2093a900-af29-11eb-8aa1-d6fe506643c9.png)
+![image](https://user-images.githubusercontent.com/11287531/117378279-2b4e3e00-af29-11eb-8ec5-fc8b6ab18286.png)
+
+
+
+
+Graph neural network
+(ICCV2019) Wang, Wenguan and Lu, Xiankai and Shen, Jianbing and Crandall, David J. and Shao, Ling, Zero-Shot Video Object Segmentation via Attentive Graph Neural Networks
+https://github.com/carrierlxk/AGNN
+https://openaccess.thecvf.com/content_ICCV_2019/papers/Wang_Zero-Shot_Video_Object_Segmentation_via_Attentive_Graph_Neural_Networks_ICCV_2019_paper.pdf
+![image](https://user-images.githubusercontent.com/11287531/117380019-eaf0bf00-af2c-11eb-815e-ea9d3d96544d.png)
+![image](https://user-images.githubusercontent.com/11287531/117380044-fb089e80-af2c-11eb-8abd-b624aa896ec9.png)
+![image](https://user-images.githubusercontent.com/11287531/117380078-1a073080-af2d-11eb-82ee-2fa32430f332.png)
+![image](https://user-images.githubusercontent.com/11287531/117380121-2ab7a680-af2d-11eb-93db-9e9d98db814e.png)
+
+The first five convolution blocks of DeepLabV3 is used as
+the backbone for feature extraction. For an input video I,
+each frame Ii (with a resolution of 473×473) is represented as a node vi in the video graph G and associated with
+an initial node state vi = h<sub>i</sub><sup>0</sup> ∈ R <sup>60×60×256</sup>. 
+Then, after a total of K message passing iterations, for each node vi, apply the function of the equation below to obtain a corresponding segmentation prediction map Sˆ ∈ [0, 1]<sup>60×60</sup>. 
+![image](https://user-images.githubusercontent.com/11287531/117380993-25f3f200-af2f-11eb-8c26-6642ee67e04b.png)
+
+
+
+
+
+
+
+
+
+===================
+
+
+
+
 (arXiv2017) Vijayanarasimahan et al., SfM-Net: Learning of Structure and Motion from Video
 https://ui.adsabs.harvard.edu/abs/2017arXiv170407804V/abstract
 https://arxiv.org/pdf/1704.07804v1.pdf
@@ -147,6 +190,26 @@ iteration, the learner bootstraps itself by mining better forebackground knowled
 β1 = 0.1, β2 = 0.02 and β3 = 0.5.
 Once the model is trained, the learned representations ϕ can be used for ZVOS and O-VOS, with slight modifications.
 ![image](https://user-images.githubusercontent.com/11287531/117292587-81d56100-aec4-11eb-8aa0-b163838ed868.png)
+
+
+
+
+Dataset and Metrics
+Datasets and Metrics: We use two well-known datasets:
+• DAVIS16 [45] is a challenging video object segmentation dataset which consists of 50 videos in total (30 for
+training and 20 for val) with pixel-wise annotations for
+every frame. Three evaluation criteria are used in this
+dataset, i.e., region similarity (Intersection-over-Union)
+J , boundary accuracy F, and time stability T .
+• Youtube-Objects [47] comprises 126 video sequences
+which belong to 10 object categories and contain more
+than 20,000 frames in total. Following its protocol, we
+use J to measure the segmentation performance.
+• DAVIS17 [46] consists of 60 videos in the training set, 30
+videos in the validation set and 30 videos in the test-dev
+set. Different from DAVIS2016 and Youtube-Objects,
+which only focus on object-level video object segmentation, DAVIS17 provides instance-level annotations.
+
 
 
 Video Object Segmentation and Tracking: A Survey

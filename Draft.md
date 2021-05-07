@@ -251,7 +251,6 @@ Once the model is trained, the learned representations ϕ can be used for ZVOS a
 ================
 
 Datasets and Metrics:
-• DAVIS16 [45] is a challenging video object segmentation dataset which consists of 50 videos in total (30 for training and 20 for val) with pixel-wise annotations for every frame. Three evaluation criteria are used in this dataset, i.e., region similarity (Intersection-over-Union)J , boundary accuracy F, and time stability T 
-• Youtube-Objects [47] comprises 126 video sequences belonging to 10 object categories and contain more than 20,000 frames in total. Following its protocol, J is commonly for measuring the segmentation performance.
-• DAVIS17 [46] consists of 60 videos in the training set, 30 videos in the validation set and 30 videos in the test-dev set. Different from DAVIS2016 and Youtube-Objects, which only focus on object-level video object segmentation, DAVIS17 provides instance-level annotations.
-
+• DAVIS16 [45] is a challenging video object segmentation dataset which consists of 50 videos in total (30 for training and 20 for val) with pixel-wise annotations for every frame. Three evaluation criteria are used in this dataset, i.e., region similarity (Intersection-over-Union)J , boundary accuracy F, and time stability T </br> 
+• Youtube-Objects [47] comprises 126 video sequences belonging to 10 object categories and contain more than 20,000 frames in total. Following its protocol, J is commonly for measuring the segmentation performance. </br>
+• DAVIS17 [46] consists of 60 videos in the training set, 30 videos in the validation set and 30 videos in the test-dev set. Different from DAVIS2016 and Youtube-Objects, which only focus on object-level video object segmentation, DAVIS17 provides instance-level annotations. </br>

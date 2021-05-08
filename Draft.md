@@ -101,6 +101,8 @@ https://openaccess.thecvf.com/content_CVPR_2019/papers/Lu_See_More_Know_More_Uns
 ![image](https://user-images.githubusercontent.com/11287531/117378252-2093a900-af29-11eb-8aa1-d6fe506643c9.png)
 ![image](https://user-images.githubusercontent.com/11287531/117378279-2b4e3e00-af29-11eb-8ec5-fc8b6ab18286.png)
 
+This method is a Siamese network which consists of three cascaded parts and a CRF post-process. The three parts are a DeepLabv3 based feature embedding module, a co-attention module, and a segmentation module. 
+In the training phase, the DeepLabv3 based siamese network takes two streams (a query frame and a random sampled reference frame from the same video) as input to build the feature representions. The output are then refined by the co-attention module which first learns the normalized similarities between the feature representations, secondly computes the attention summaries with the feature representations and the normoalized similarities, and lastly feeds the co-attnetion enhanced features to a 1x1 convolutional layer to weight information from different input frames. After that, the features are passed into a segmentation network consisting of four convolutional layers and a sigmoid activation.
 
 
 

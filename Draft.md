@@ -6,14 +6,32 @@ https://openaccess.thecvf.com/content_ECCV_2018/papers/Hongmei_Song_Pseudo_Pyram
 Pyramid dilated bidirectional ConvLSTM architecture, and CRF-based post-process Continued
 ![image](https://user-images.githubusercontent.com/11287531/116868153-5eab7700-ac62-11eb-90bb-e8a50ae19804.png)
 
-The model consists of two key components. The first one, named Pyramid Dilated Convolution (PDC) module, is used for explicitly extracting spatial saliency features on multi-scales.
-feature map F = ResNet(a 473x473x3 video frame), 60x60x2048
+Optical flow offers explicit motion information, but also incurs signicant computational cost, which severely limits the applicability of current video saliency models. 
+
+The model consists of two key components. The first one, named Pyramid Dilated Convolution (PDC) module, is used for explicitly extracting spatial saliency features on multi-scales.</br>
+feature map F = ResNet(a 473x473x3 video frame), 60x60x2048</br>
 T1 = DilatedConv1(F) </br>
 T2 = DilatedConv2(F) </br>
 T3 = DilatedConv3(F) </br>
 T4 = DilatedConv4(F) </br>
 Z = Concatenate(F, T1, T2, T3, T4) </br>
 With the dilated convolution, it computes dense CNN features at various receptive field sizes.
+
+fed into PDB-ConvLSTM (detailed in next section), thus the network is able
+to learn the importance of the scales automatically (such as learning saliency fea-
+ture from a proper distance).
+
+
+The second component, named Pyramid Dilated Bidirectional ConvLSTM(PDB-ConvLSTM), which augments the vanilla ConvLSTM.
+
+
+
+
+(CVPR2018) Flow Guided Recurrent Neural Encoder for Video Salient Object Detection
+https://openaccess.thecvf.com/content_cvpr_2018/papers/Li_Flow_Guided_Recurrent_CVPR_2018_paper.pdf
+https://blog.csdn.net/weixin_38682454/article/details/88024351
+
+
 
 
 (CVPR2019) Wang et al., Learning Unsupervised Video Object Segmentation through Visual Attention
@@ -111,6 +129,13 @@ Then, after a total of K message passing iterations, for each node vi, apply the
 
 
 ===================
+
+
+(2018) Wang, W., Shen, J., Shao, L., Video Salient Object Detection via Fully Convolutional Networks
+https://www.researchgate.net/publication/319950992_Video_Salient_Object_Detection_via_Fully_Convolutional_Networks
+
+
+
 
 (ECCV2020) Mingmin Zhen, Shiwei Li, Lei Zhou, Jiaxiang Shang, Haoan Feng, Tian Fang, Long Quan, Learning Discriminative Feature with CRF for Unsupervised Video Object Segmentation
 https://www.ecva.net/papers/eccv_2020/papers_ECCV/papers/123720443.pdf

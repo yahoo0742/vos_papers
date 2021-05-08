@@ -106,7 +106,7 @@ In the training phase, the DeepLabv3 based siamese network takes two streams (a 
 The output are then refined by the co-attention module which first learns the normalized similarities between the feature representations, second computes the attention summaries with the feature representations and the normoalized similarities, and lastly feeds the co-attnetion enhanced features to a 1x1 convolutional layer to weight information from different input frames. The vanilla co-attention module was implemented using a fully connected layer with 512x512 parameters, while the channel-wise co-attention is built on a Squeeze-and-Excitation-like module.
 Following the co-attention module, the features are passed into a segmentation network that consists of four convolutional layers and a sigmoid activation to generate the binary mask for the query frame.
 After all, the binary mask is post-processed by CRF.
-
+In the alblation study from the paper, without the co-attention module, the mean region similarity drops 9.2% on DAVIS16, 5.5% on FBMS, and 7.6% on Youtube-Objects.
 
 
 Graph neural network

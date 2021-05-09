@@ -6,9 +6,11 @@ https://openaccess.thecvf.com/content_ECCV_2018/papers/Hongmei_Song_Pseudo_Pyram
 Pyramid dilated bidirectional ConvLSTM architecture, and CRF-based post-process Continued
 ![image](https://user-images.githubusercontent.com/11287531/116868153-5eab7700-ac62-11eb-90bb-e8a50ae19804.png)
 
-Optical flow offers explicit motion information, but also incurs signicant computational cost, which severely limits the applicability of current video saliency models. 
+Optical flow offers explicit motion information, but also incurs significant computational cost, which severely limits the applicability of current video saliency models. 
 
-The model consists of two key components. The first one, named Pyramid Dilated Convolution (PDC) module, is used for explicitly extracting spatial saliency features on multi-scales.</br>
+The model consists of two key components. The first one, named Pyramid Dilated Convolution (PDC) module, which consists of four dilated convolutions with different dilation rates for explicitly extracting spatial saliency features in the same size but with different receptive field sizes. This is similar to observing the image from different distances. The multi-sacle spatial features are then concatenated together with the original input feature to feed the second component, two parallel DB-ConvLSTMs that are both implemented with 3x3x32 kernels for interpreting the temporal features of video frames and fusing spatial and temporal features automatically. The output of the DB-ConvLSTM branches in PDB-ConvLSTM are further concatenated as a multi-scale spatiotemporal saliency feature to feed a 1x1x1 convolution layer with a sigmoid activation for generating a binary mask which is at last upsampled to the size of the video frame via bilinear interpolation. Compared to the previous shallow, parallel bi-directional feature extraction strategy [REF_2015 Convolutional LSTM network Shi, X., Chen, Z., Wang, H.,], the PDB-ConvLSTM improves it with a deeper and cascaded learning process to bidirectionally capture information of both the forward and backward frames in a video.
+
+
 feature map F = ResNet(a 473x473x3 video frame), 60x60x2048</br>
 T1 = DilatedConv1(F) </br>
 T2 = DilatedConv2(F) </br>
@@ -17,12 +19,7 @@ T4 = DilatedConv4(F) </br>
 Z = Concatenate(F, T1, T2, T3, T4) </br>
 With the dilated convolution, it computes dense CNN features at various receptive field sizes.
 
-fed into PDB-ConvLSTM (detailed in next section), thus the network is able
-to learn the importance of the scales automatically (such as learning saliency fea-
-ture from a proper distance).
 
-
-The second component, named Pyramid Dilated Bidirectional ConvLSTM(PDB-ConvLSTM), which augments the vanilla ConvLSTM.
 
 
 

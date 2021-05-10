@@ -186,9 +186,71 @@ At last, concatenate F<sup>new</sup> and F<sub>i</sub> to feed to a 1x1 convolut
 
 
 
+==========
+AAAI2021 F2Net: Learning to Focus on the Foreground for Unsupervised Video Object Segmentation
+https://arxiv.org/pdf/2012.02534.pdf
+
+
+we propose a novel Focus on Foreground Network (F2Net),
+which delves into the intra-inter frame details for the foreground objects and thus effectively improve the segmentation
+performance. 
+
+Specifically, our proposed network consists of
+three main parts: Siamese Encoder Module, Center Guiding
+Appearance Diffusion Module, and Dynamic Information Fusion Module. 
+
+Firstly, we take a siamese encoder to extract
+the feature representations of paired frames (reference frame
+and current frame). 
+
+Then, a Center Guiding Appearance Diffusion Module is designed to capture the inter-frame feature
+(dense correspondences between reference frame and current
+frame), intra-frame feature (dense correspondences in current frame), and original semantic feature of current frame.
+
+Specifically, we establish a Center Prediction Branch to predict the center location of the foreground object in current
+frame and leverage the center point information as spatial
+guidance prior to enhance the inter-frame and intra-frame
+feature extraction, and thus the feature representation considerably focus on the foreground objects. 
+
+
+Finally, we propose a Dynamic Information Fusion Module to automatically select relatively important features through three aforementioned different level features. 
+
+
+considering center point can be taken as the spatial prior guidance (Zhou, Wang, and Krahenb ¨ uhl 2019; Zhou, Koltun, and Kr ¨ ahenb ¨ uhl 2020; ¨ Wang et al. 2020), we tend to firstly predict the center point of the primary object and then segment the mask from such point to its surroundings
+
+
+Different from the common appearance matching based methods, we additionally establish a Center Prediction Branch to estimate the center location of the primary object. Then, we encode the predicted center point into a gauss map as the spatial guidance prior to enhance the intra-frame and inter-frame feature matching in our Center Guiding Appearance Diffusion Module, leading the model to focus on the foreground object. After the appearance matching process, we can get three kinds of information flows: inter-frame features, intra-frame features, and original semantic features of current frame. Instead of fusing these three features by simple concatenation like previous methods, an attention based Dynamic Information Fusion Module is developed to automatically select the most discriminative features across the three features, providing more optimal representations for final segmentation.
+
+
+F2Net illustrated in Figure 2, which consists of three main parts: a Siamese Encoder Module, a Center Guiding Appearance Diffusion Module, and a Dynamic Information Fusion Module. Given a pair of frames, we first generate their embeddings by a siamese encoder. After that, the Center Guiding Appearance Diffusion Module first predicts the foreground object center point by a Center Prediction Branch, then encodes it into a gauss map as the spatial-prior condition during the appearance matching process. After appearance matching, we can get three kinds of features. At last, we apply a Dynamic Information Fusion Module to fuse different level matched features for final segmentation.
+
+The siamese encoder takes a pair of RGB images as inputs, including a current frame It ∈ RW×H×3 and a reference frame I0 ∈ RW×H×3 . Here, we take the first frame I0 as the reference frame because ASSUMPTION it is guaranteed to contain the foreground objects. The backbone network of the siamese encoder is DeepLabv3. We denote the extracted embeddings of It, I0 as Vt,V0 ∈ R W/8 × H/8 ×C.
+
+
+Center Prediction Branch. We transform the point prediction into a heatmap Ht estimation task, which consists of two main steps: Feature Upsampling and Heatmap Generation. In Feature Upsampling, we adopt an upsample module to efficiently merge features of different res-blocks (res2, res3, res4, res5) in different scales to enhance the information for high-resolution features.  In Heatmap Generation, we consider two aspects as shown in Figure 3: 1) Spatial clues from previous frame: we propagate previous gauss map Gt−1 to current frame for better locating the foreground (if the current frame is the first frame, we utilize a zero map as the previous gauss map).  2) Semantic information from current feature we can directly estimate the heatmap Ft on Ut by applying a 3 × 3 convolutional layer with ReLU, followed by a 1×1 convolutional layer. At last, we add this two estimation branch into one with a sigmoid function by:
+
+
+To choose the best center point ot = (xt, yt) ∈ R 2 from Ht, we additionally consider the motion clues across the sequential frames for better accuracy. using n history object centers in previous frames. At last, we compute the distance from each candidate to pt, and choose the closest one as the final center ot of the foreground object in current frame.
+
+
+Spatial-Prior Guided Appearance Matching. To determine the foreground object, there are two essential properties: 1) distinguishable in an individual frame (locally saliency), and 2) frequently appearing throughout the video sequence (globally consistent). To achieve the first goal, we apply a non-local operation (Wang et al. 2018) on the current feature Vt to locate the salient object in an intra-wise matching way. To achieve our second goal, we utilize another non-local operation on both current and the reference features Vt,V0 to capture the inter-frame correlated information for alleviating appearance drift. We also employ a skip-connection on current feature Vt to preserve the semantic information. All three features contain different level information. To focus on the foreground, we encode the predicted center point ot into a gauss map Gt as spatial guidance prior for the intra-frame and interframe appearance matching. Compared to other appearance matching methods, the key difference of our method is that the encoded feature representation is weighted by the gaussguided spatial prior. 
+
+
+After that, we reconstruct feature Vˆ t in which the pixel embeddings are weighted according to their similarity with the foreground.
+
+At last, we can get three kinds of information flows  1) initial current feature Vt, 2) intra-frame feature Vˆ t,intra for intra-frame discriminability and 3) inter-frame feature Vˆ t,inter for inter-frame consistency.
+
+
+Dynamic Information Fusion Original current feature Vt only contains a coarse clue for inferring the target foreground object without a global view. Intra-frame feature Vˆ t,intra contains more accurate salient object information in current frame, but fails to address the appearance changes in a video sequence. Inter-frame feature Vˆ t,inter contains more contexts to adapt to the appearance changes of the foreground objects. Instead of directly fusing these three features by simple concatenation (Lu et al. 2019; Yang et al. 2019), we need to selectively aggregate them to generate more discriminative features.   Channel-wise attention. The basic idea of channel-wise attention is to use gates to control the information flows from three-level features in channel dimension. Spatial-wise attention. Such spatial guidance is injected into the attention mechanism to selectively focus on the foreground pixels. To strengthen the information on the spatial dimension.
+
+After the channel-wise and spatial-wise attention modules, the information flows from three-level input features can be adaptively aggregated into one feature map. Like most of previous works, we employ a decoder which consists of two convolutional layers to generate the final binary mask result Rt ∈ RW×H.
 
 
 
+
+
+Following (Wang et al. 2019; Lu et al. 2019), we adopt two alternated steps to train our model. In the static-image iteration, we utilize image saliency dataset MSRA10K (Cheng et al. 2014) to fine-tune the DeepLabV3 based feature embedding module and the Center Prediction Branch. 
+Meanwhile, in the dynamic-video iteration, we train the whole model with the training set in DAVIS16 (Perazzi et al. 2016). During training the Center Guiding Appearance Diffusion module, we first separately train the Center Prediction Branch and Spatial-Prior Guided Appearance Matching in parallel in the first 20 epochs, where we feed the appearance matching module with the center point of ground truth. Then, in latter epochs, we feed the appearance matching module with the predicted point from the Center Prediction Branch to jointly train them.
 
 
 

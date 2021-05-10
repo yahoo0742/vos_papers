@@ -191,6 +191,22 @@ AAAI2021 F2Net: Learning to Focus on the Foreground for Unsupervised Video Objec
 https://arxiv.org/pdf/2012.02534.pdf
 
 
+Tokmakov et al.(Tokmakov, Alahari, and Schmid 2017) proposed a purely optical flow based network that discards appearance modelling and casts segmentation as foreground motion prediction, thus poorly deals with static foreground objects. To address this problem, two-stream networks are introduced to fuse appearance and motion information (Li et al. 2018a; Jain, Xiong, and Grauman 2017; Cheng et al. 2017; Li et al. 2018c; Zhou et al. 2020). However, above methods utilize optical flow information, and significantly suffer from not only the large computation of the optical flows, but also the deterioration in the quality of their predictions over time.
+
+Targeting this issue, several approaches (Wang et al. 2019; Yang et al. 2019; Lu et al. 2019; Chen et al. 2018; Fathi et al. 2017; Li et al. 2018b; Oh et al. 2019) tackle video object segmentation by simply learning similarities between pixel embeddings without motion contexts. AGNN (Wang et al. 2019) provides an unified, end-to-end trainable network to capture the higher-order correlated information with graph attention network. AnDiff (Yang et al. 2019) performs appearance similarity learning, feature propagation and binary segmentation in a single network. COS (Lu et al. 2019) utilizes co-attention to comprehensively use the rich, inherent correlation information within videos.   Although these appearance matching based methods achieve state-of-the-arts performance, they only consider the matched pixels across the frame where the visual similar objects or surroundings may be wrongly taken as the foreground
+
+Latest appearance matching methods in UVOS (Wang et al. 2019; Yang et al. 2019; Lu et al. 2019) generally match the pixel embeddings across the whole frame based on attention mechanism, thus may wrongly segment the visually similar backgrounds. They also fuse the matched features by simple concatenation which may lose fine-grained details. To pay more attention on the foreground, we predict the foreground object center and encode it to a spatial gauss map. Such spatial guidance is injected into the attention mechanism to selectively focus on the foreground pixels. Besides, instead of fusing features by simply concatenation, we devise an attention based Dynamic Information Fusion Module to aggregate information from different level features.
+
+
+
+
+For example, as shown in Figure 1, there are three challenging scenarios: foreground-background visual similarity, object occlusion, and appearance changing. For appearance matching method Anchor Diffusion Network (AnDiff) (Yang et al. 2019), it fails to separate the foreground camel from the background one in the first video as the two camels have similar appearance. It also can not handle the appearance changing problem as shown in the third video. For two stream network MAT (Zhou et al. 2020), it only segments part of the occluded object in the second video because optical flow is not robustness to the object occlusion. The above methods pay less attention to the foreground object, leading to the inaccurate segmentation result. 
+
+------------
+
+
+
+
 we propose a novel Focus on Foreground Network (F2Net),
 which delves into the intra-inter frame details for the foreground objects and thus effectively improve the segmentation
 performance. 

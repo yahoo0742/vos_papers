@@ -38,6 +38,11 @@ Input: 视频里的两帧 F<sub>a</sub>, F<sub>b</sub></br>
 如果我们进一步约束权重矩阵W为一个对称矩阵。因为对称矩阵的特征值不等的特征向量正交，所以特征向量组矩阵P就变成了一个正交矩阵。这个对称的协同注意力可以演变成
 ![image](https://user-images.githubusercontent.com/11287531/115957756-56fc1c00-a558-11eb-8ad1-01fe913367f2.png)
 
+用我的推导而不是paper里的公式的话</br>
+W = P D P<sup>-1</sup> </br>
+S = V<sub>b</sub><sup>T</sup> P D P<sup>-1</sup> V<sub>a</sub> </br>
+这就不是计算两个投影结果的相似度了。
+
 
 **原话It indicates that we project the feature embeddings V<sub>a</sub> and V<sub>b</sub> into an orthogonal common space and maintain their norm of V<sub>a</sub> and V<sub>b</sub>.**
 ```diff
